@@ -1,0 +1,177 @@
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Mysql queries | Azure Mysql database </title>  
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>  
+</head>
+
+
+<body>
+
+
+
+
+ 	 <div class="container">
+
+
+
+				<blockquote><h1 class="header center">PHPqAzure</h1></blockquote>
+     		 <div class="row center">
+		      <h5 class="header col s12 light">Execute queries on your mysql database that is stored on Azure</h5>
+		      </div>
+
+				  <div class="card hoverable">
+				    <div class="card-content">
+				      <span class="card-title activator grey-text text-darken-4">Basic Instructions</span>
+				     <ol>
+				     <li>Enter credentials that Azure provides for a mysql database</li>
+				     <li>Execute</li>
+				      <li>See execution result</li>
+				     </ol>
+				    </div>
+				  </div>
+
+
+				  <div class="row">
+
+    				<form class="col s12" method="post">
+
+			     		 <div class="row">
+
+			        	<div class="input-field col s6">
+			          	<input id="host_name" name="hostname" type="text" class="validate">
+			         	 <label for="host_name">Host Name</label>
+			        	</div>
+
+			        	<div class="input-field col s6">
+			          <input id="db_name" name="dbname" type="text" class="validate">
+			          <label for="db_name">Database Name</label>
+			       		 </div>
+
+			      		</div>
+
+			      		<div class="row">
+
+			        	<div class="input-field col s6">
+			          	<input id="user_name" name="username" type="text" class="validate">
+			         	 <label for="user_name">Username</label>
+			        	</div>
+
+			        	<div class="input-field col s6">
+			          <input id="password" name="password" type="text" class="validate">
+			          <label for="password">Password</label>
+			       	 </div>
+
+			      	</div>
+
+
+    
+   						<div class="row">
+   				 		 <div class="input-field col s12">
+				          <i class="material-icons prefix">tab</i>
+				          <input  type="text" id="query" name="query" class="validate">
+				          <label for="icon_prefix2">MySQL query</label>
+				        </div>
+    					</div>
+
+    					 <div class="row">
+				   
+				  	<div class="center"> 
+ 					  <button id="submitBtn" onclick="doTheWork(); return false;"  class="btn waves-effect waves-light" type="submit" name="submit">Submit
+						    <i class="material-icons right">trending_flat</i>
+						  </button>
+					</div>
+ 	 			</div>
+
+
+   		 	</form>
+
+   		 	</div>
+
+
+   		 	<div class="row">
+
+   		 		  <div class="card hoverable">
+				    <div class="card-content">
+				      <span class="card-title activator grey-text text-darken-4">Result</span>
+				    	<div id="result">Nothing right now</div>
+				    </div>
+				  </div>	
+
+
+   		 	</div>
+
+       
+
+</div>
+
+
+ 	  <footer style="{position:fixed; bottom:0; margin-bottom:0px; padding:0px;}" class="page-footer teal darken-1">
+          <div class="footer-copyright teal darken-1">
+            <div class="container">
+           	<div class="white-text left">Source code is available on <a href="https://github.com/jerrak0s/PHPqAzure" class="black-text" target="_blank">github</a></div> 
+            <a class="white-text text-lighten-4 right" target="_blank" href="http://geralexgr.com">geralexgr.com</a>
+            </div>
+          </div>
+        </footer>
+
+
+       
+ 
+<script type="text/javascript">
+
+	
+
+    	function doTheWork() {
+
+    	 var _host  = document.getElementById('host_name').value;       
+         var _db = document.getElementById('db_name').value;  
+         var _user = document.getElementById('user_name').value;  
+         var _pass =  document.getElementById('password').value;  
+         var _query =  document.getElementById('query').value;  
+
+
+         
+
+
+	        $.ajax({
+	        type: "POST",
+	        cache:false,
+	        url: "request.php",
+	        data:  {host:_host,db:_db,user:_user,pass:_pass,query:_query},
+	        success: function(data){
+
+	        	//console.log(data);
+
+	        	var start = data.indexOf("[");
+	        	var error = data.substring(start);
+	        	if (error=="[\"\"]") {
+ 					document.getElementById('result').innerHTML ="[Query executed successfully]";
+	        	} else {
+	        		 document.getElementById('result').innerHTML =error;
+	        	}
+	          
+	         }
+	         
+	        });
+
+    	}	// do the work
+        
+
+</script>
+   		
+
+
+</body>
+</html>
