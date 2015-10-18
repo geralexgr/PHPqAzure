@@ -1,6 +1,6 @@
 # PHPqAzure
 
-####This tool helps you execute queries on your mysql azure database.
+#####This tool helps you execute queries on your mysql azure database.
 
 ###Use
 You can download and run it locally. A web version is coming soon. 
